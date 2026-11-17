@@ -1,52 +1,33 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <h1 class="font-serif text-2xl text-ivory">Buat akun</h1>
+    <p class="mt-1 text-sm text-silver">Daftar untuk memesan parfum dan memantau pesananmu.</p>
+
+    {{-- action: ke URL /register dengan method POST (didefinisikan di routes/auth.php) --}}
+    <form method="POST" action="{{ route('register') }}" class="mt-6 space-y-4">
+        {{-- @csrf: token anti-pemalsuan form. WAJIB di setiap form POST,
+             tanpa ini Laravel menolak dengan error 419 --}}
         @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+        <x-field label="Nama lengkap" name="name" required autofocus autocomplete="name" />
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <x-field label="Email" name="email" type="email" required autocomplete="email"
+                 hint="Notifikasi pesanan dikirim ke email ini." />
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <x-field label="No. WhatsApp" name="phone" type="tel" required inputmode="numeric"
+                 placeholder="0812xxxxxxxx" autocomplete="tel"
+                 hint="Untuk notifikasi status pesanan via WhatsApp." />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+        <x-field label="Password" name="password" type="password" required autocomplete="new-password" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        <x-field label="Ulangi password" name="password_confirmation" type="password" required autocomplete="new-password" />
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+        <div class="pt-2">
+            <x-gold-button>Daftar</x-gold-button>
         </div>
     </form>
+
+    <p class="mt-6 text-center text-sm text-silver">
+        Sudah punya akun?
+        <a href="{{ route('login') }}" class="font-medium text-gold hover:text-gold-light">Masuk</a>
+    </p>
 </x-guest-layout>

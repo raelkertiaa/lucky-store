@@ -12,10 +12,20 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Beri nama pendek 'admin' supaya mudah dipasang di route
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+        ]);
+
+        // Kalau user yang SUDAH login membuka /login atau /register,
+        // arahkan ke halaman yang sesuai role-nya
+        $middleware->redirectUsersTo(
+            fn (Request $request) => $request->user()?->isAdmin()
+                ? route('admin.dashboard')
+                : route('home')
+        );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->shouldRenderJsonWhen(
-            fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
-        );
+        //
     })->create();
+    
