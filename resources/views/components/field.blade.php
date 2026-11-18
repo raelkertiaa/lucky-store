@@ -18,7 +18,7 @@
         type="{{ $type }}"
         {{-- old() mengisi ulang nilai sebelumnya kalau validasi gagal.
              Password sengaja tidak diisi ulang demi keamanan. --}}
-        @if ($type !== 'password') value="{{ old($name) }}" @endif
+        @if ($type !== 'password') value="{{ old($name, $value) }}" @endif
         {{-- $attributes = atribut lain yang dikirim (required, autofocus, placeholder, dll.)
              merge() menggabungkannya dengan class bawaan di bawah --}}
         {{ $attributes->merge([
