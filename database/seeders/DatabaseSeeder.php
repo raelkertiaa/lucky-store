@@ -26,5 +26,6 @@ class DatabaseSeeder extends Seeder
 
         $admin->role = UserRole::Admin;
         $admin->save();
+        $this->call(MasterDataSeeder::class);
     }
 }

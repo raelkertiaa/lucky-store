@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductSizeController;
 
 // ===== Publik =====
 // Beranda sementara (halaman bawaan Laravel). Akan diganti di Task 3.
@@ -26,6 +28,17 @@ Route::middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
         Route::view('/', 'admin.dashboard')->name('dashboard');
+
+        // Satu baris resource = 7 route CRUD sekaligus. except('show') = tanpa halaman detail
+        Route::resource('kategori', CategoryController::class)
+            ->except('show')
+            ->names('categories')                     // nama route: admin.categories.index, dst.
+            ->parameters(['kategori' => 'category']); // {kategori} dibaca sebagai $category
+
+        Route::resource('ukuran', ProductSizeController::class)
+            ->except('show')
+            ->names('sizes')
+            ->parameters(['ukuran' => 'size']);
     });
 
 // Route login/register/lupa password dari Breeze

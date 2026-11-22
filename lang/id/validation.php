@@ -225,7 +225,7 @@ return [
         'minute'                   => 'menit',
         'mobile'                   => 'seluler',
         'month'                    => 'bulan',
-        'name'                     => 'nama lengkap',
+        'name'                     => 'nama',
         'national_code'            => 'kode nasional',
         'number'                   => 'nomor',
         'password'                 => 'kata sandi',
